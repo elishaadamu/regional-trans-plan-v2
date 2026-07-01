@@ -1,0 +1,404 @@
+/* App.css - React Plan 2050 Timeline inside social-media-timeline Subproject */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap');
+
+:root {
+  --sm-bg: #1e2538;
+  --sm-teal: #5bc0be;
+  --sm-red: #e05a47;
+  --sm-white: #ffffff;
+  --sm-text-muted: rgba(255, 255, 255, 0.9);
+  --sm-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Force body and background color overrides */
+body, html, #root {
+  background-color: var(--sm-bg) !important;
+  background: var(--sm-bg) !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Outfit', sans-serif;
+  color: var(--sm-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Sticky Navigation Header bar */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(30, 37, 56, 0.95);
+  border-bottom: 1px solid var(--sm-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--sm-teal);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(91, 192, 190, 0.6);
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--sm-white);
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--sm-white);
+}
+
+/* Main Timeline Section */
+.timeline-section {
+  padding: 120px 24px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Infographic Header styling */
+.timeline-header {
+  background-color: var(--sm-teal);
+  color: #1e2538;
+  padding: 45px 30px;
+  text-align: center;
+  border-radius: 16px;
+  margin-bottom: 60px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.timeline-header h1 {
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: 12px;
+  margin: 0 0 0 12px;
+  line-height: 1.1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.hourglass-emoji {
+  font-size: 30px;
+}
+
+.header-divider {
+  width: 150px;
+  height: 3px;
+  background-color: #1e2538;
+  margin: 15px auto 16px;
+}
+
+.header-subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Timeline main container body */
+.timeline-container {
+  position: relative;
+  padding: 20px 0;
+}
+
+/* Central backbone vertical line */
+.timeline-backbone-line {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  background-color: var(--sm-teal);
+  transform: translateX(-50%);
+  z-index: 5;
+  transition: background 0.4s ease;
+}
+
+/* Timeline grid row system */
+.timeline-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 30px 4px 30px 60px 1fr;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 10;
+}
+
+.timeline-row.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Row-left alignments (Phases 1, 3, 5, 7) */
+.row-left .timeline-text-block {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 25px;
+}
+
+.row-left .timeline-node-card {
+  grid-column: 2;
+  justify-self: end;
+}
+
+.row-left .timeline-connector-branch {
+  grid-column: 3;
+  width: 100%;
+  height: 4px;
+  background-color: var(--sm-teal);
+  align-self: center;
+}
+
+/* Row-right alignments (Phases 2, 4, 6, 8) */
+.row-right .timeline-connector-branch {
+  grid-column: 5;
+  width: 100%;
+  height: 4px;
+  background-color: var(--sm-teal);
+  align-self: center;
+}
+
+.row-right .timeline-node-card {
+  grid-column: 6;
+  justify-self: start;
+}
+
+.row-right .timeline-text-block {
+  grid-column: 7;
+  text-align: left;
+  padding-left: 25px;
+}
+
+.grid-spacer {
+  display: none;
+}
+
+/* White square node card styling */
+.timeline-node-card {
+  width: 60px;
+  height: 60px;
+  background-color: var(--sm-white);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  z-index: 10;
+  border: 2px solid transparent;
+}
+
+.timeline-row.row-hovered .timeline-node-card {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(91, 192, 190, 0.4);
+  border-color: var(--sm-teal);
+}
+
+.brand-svg-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+/* Text block typography */
+.timeline-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-year {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--sm-red);
+  margin: 0 0 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.platform-name {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--sm-teal);
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+  line-height: 1.35;
+  font-family: 'Montserrat', sans-serif;
+  display: block; /* Disable flex wrapper to flow inline status badge naturally */
+}
+
+/* Status pills inline with titles */
+.status-tag-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1;
+}
+
+.badge-completed {
+  background-color: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+}
+
+.badge-upcoming {
+  background-color: rgba(148, 163, 184, 0.15);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #94a3b8;
+}
+
+.platform-desc {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--sm-white);
+  margin: 0;
+  font-weight: 400;
+  font-family: 'Outfit', sans-serif;
+}
+
+.platform-subtext {
+  font-size: 13.5px;
+  font-style: italic;
+  color: #94a3b8;
+  margin: 6px 0 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* RESPONSIVE DESIGN - COLLAPSE TIMELINE ON MOBILE */
+@media (max-width: 767px) {
+  .timeline-section {
+    padding: 100px 16px 60px;
+  }
+
+  .timeline-backbone-line {
+    left: 40px;
+    transform: none;
+  }
+
+  .timeline-row {
+    grid-template-columns: 80px 20px 1fr; /* Node (80px) + Connector (20px) + Text (1fr) */
+    grid-gap: 0;
+    margin-bottom: 35px;
+  }
+
+  .row-left .timeline-node-card,
+  .row-right .timeline-node-card {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .row-left .timeline-connector-branch,
+  .row-right .timeline-connector-branch {
+    grid-column: 2;
+    width: 100%;
+    height: 4px;
+    background-color: var(--sm-teal);
+    align-self: center;
+  }
+
+  .row-left .timeline-text-block,
+  .row-right .timeline-text-block {
+    grid-column: 3;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 0;
+  }
+
+  .timeline-header {
+    padding: 30px 16px;
+  }
+
+  .timeline-header h1 {
+    font-size: 26px;
+    letter-spacing: 6px;
+  }
+}
+
+/* Accessibility reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-row {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .timeline-node-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
